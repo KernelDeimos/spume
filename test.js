@@ -3,9 +3,9 @@ import { CLASS, PropertyBehaviour } from "./spume.js";
 const Thing = CLASS({})
 
 const TestClass = CLASS({
-    something: new PropertyBehaviour({
+    something: {
         adapt: v => ['inalist', v]
-    }),
+    },
     abool: true,
 
     hello () {

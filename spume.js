@@ -45,6 +45,10 @@ export class PropertyAxiom extends Axiom {
         {
             predicate: v => v === true || v === false,
             cls: BooleanBehaviour
+        },
+        {
+            predicate: () => true,
+            cls: PropertyBehaviour
         }
     ]
     
@@ -56,6 +60,14 @@ export class PropertyAxiom extends Axiom {
     }
 
     static getAppropriateBehaviourForValue (value) {
+        if ( typeof value === 'object' ) {
+            if ( Array.isArray(value) ) {
+                throw new Error('arrays are not valid - please use a factory');
+            }
+
+            return new PropertyBehaviour(value);
+        }
+
         for ( const builtinBehaviour of this.builtinBehaviours ) {
             if ( ! builtinBehaviour.predicate(value) ) continue;
             const behaviourClass = builtinBehaviour.cls;
